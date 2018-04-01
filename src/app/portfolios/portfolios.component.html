@@ -1,0 +1,84 @@
+<div style="text-align:center">
+  <h1>
+    {{ title }}
+  </h1>
+</div>
+<div class="container">
+  <div class="form-group">
+    <h1>Tracking your Networth</h1>
+    <span> Select Currency: CAD</span>
+     <div class="row text-success">
+        <div class="col-xs-4">
+          <h4>Net Worth </h4>
+        </div>
+          <h4>{{ portfolioResponse?.netWorth | currency: "USD":"2.2-2"}}</h4>
+      </div>
+    <h3><span class="text-success">Assets</span></h3>
+    <h4>Cash and Investments</h4>
+      <div *ngFor="let asset of portfolio.assets">
+        <span *ngIf="asset.type == 1">
+          <div class="row">
+            <div class="col-xs-4">
+              <span>{{asset.name}}  
+              </span>
+            </div>
+           {{asset.currency}}<span><input name="amount" type="number" [(ngModel)]="asset.amount" (change)="addPortfolio(portfolio)" class="text-danger" required step="100" min="1" max="1000000" #amount="ngModel" /></span>
+           <div *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+              class="alert alert-danger">
+              <div *ngIf="amount.errors">
+                Value is required between 1 and 1 million.
+              </div>
+          </div>
+          </div>
+        </span>
+      </div>
+      <h4>Long Term Assets</h4>
+      <div *ngFor="let asset of portfolio.assets">
+        <span *ngIf="asset.type == 2">
+          <div class="row">
+            <div class="col-xs-4">
+              <span>{{asset.name}} 
+              </span>
+            </div>
+           <span>{{asset.currency}}</span><input name="amount" [(ngModel)]="asset.amount" type="number" (change)="addPortfolio(portfolio)" class="text-danger" required step="100" min="1" max="1000000" #amount="ngModel" />
+          </div>
+        </span>
+      </div>
+      <div class="row text-success">
+        <div class="col-xs-4">
+            <h4>Total Assets</h4>
+         </div>
+         <h4>{{ portfolioResponse?.totalAssets | currency: "USD":"2.2-2"}}</h4>
+       </div>
+    <h3><span class="text-success">Liabilities</span></h3>
+    <h4>Short Term Liabilities</h4>
+      <div *ngFor="let liability of portfolio.liabilities">
+        <span *ngIf="liability.type == 3">
+          <div class="row">
+            <div class="col-xs-4">
+              <span>{{liability.name}}</span>
+            </div>
+            <span>{{liability.currency}}</span><input name="amount" [(ngModel)]="liability.amount" type="number" (change)="addPortfolio(portfolio)" class="text-danger" required step="100" min="1" max="1000000" #amount="ngModel"/>
+          </div>
+        </span>
+      </div>
+      <h4>Long Term Assets</h4>
+      <div *ngFor="let liability of portfolio.liabilities">
+        <span *ngIf="liability.type == 4">
+          <div class="row">
+            <div class="col-xs-4">
+              <span>{{liability.name}}</span>
+            </div>
+            <span>{{liability.currency}}</span><input name="amount" [(ngModel)]="liability.amount" type="number" (change)="addPortfolio(portfolio)" class="text-danger" required step="100" min="1" max="1000000" #amount="ngModel"/>
+          </div>
+        </span>
+      </div>
+      <div class="row text-success">
+        <div class="col-xs-4">
+          <h4>Total Liabilities</h4>
+        </div>
+          <h4>{{ portfolioResponse?.totalLiabilities | currency: "USD":"2.2-2"}}</h4>
+      </div>
+  </div>
+</div>
+
